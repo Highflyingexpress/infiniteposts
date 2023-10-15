@@ -1,17 +1,15 @@
-import { useGetPostsQuery } from './service/postsApi'
 import React, { useEffect, useState } from 'react'
 import './App.css'
-
-interface IPost {
-  id: number
-  title: string
-  body: string
-  userId: number
-}
+import { useNavigate } from 'react-router-dom'
+import { prettierStr } from 'utils/strFormat'
+import { IdCircle } from 'ui/idCircle'
+import { IPost } from 'interfaces/posts.interfaces'
+import { useGetPostsQuery } from '../service/postsApi'
 
 export default function App() {
   const [page, setPage] = useState(0)
   const { data, isFetching } = useGetPostsQuery(page)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const onScroll = () => {
@@ -27,7 +25,6 @@ export default function App() {
   }, [page, isFetching])
 
   const Post = ({ id, title, body }: { id: number; title: string; body: string }) => {
-    const formattedTitle = title.charAt(0).toUpperCase() + title.slice(1) + '.'
     return (
       <div
         style={{
@@ -35,10 +32,12 @@ export default function App() {
           padding: '10px',
         }}
       >
-        <>{id}</>
-        <h3>{formattedTitle}</h3>
+        <IdCircle>{id}</IdCircle>
+        <h3>{prettierStr(title)}</h3>
         <div className="postBody">{body}</div>
-        <button className="btn">просмотр</button>
+        <button className="btn" onClick={() => navigate(`posts/${id}`)}>
+          просмотр
+        </button>
       </div>
     )
   }
