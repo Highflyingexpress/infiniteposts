@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { BASE_URL } from '../constants'
 
-// Define a service using a base URL and expected endpoints
 export const postsApi = createApi({
   reducerPath: 'postsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://jsonplaceholder.typicode.com/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
     getPosts: builder.query({
       query: (page) => `posts?_limit=6&_start=${page * 6}`,
@@ -11,11 +11,9 @@ export const postsApi = createApi({
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName
       },
-      // Always merge incoming data to the cache entry
       merge: (currentCache, newItems) => {
         currentCache.push(...newItems)
       },
-      // Refetch when the page arg changes
       forceRefetch({ currentArg, previousArg }) {
         return currentArg !== previousArg
       },

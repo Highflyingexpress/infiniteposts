@@ -1,3 +1,4 @@
 export const prettierStr = (str: string): string => {
-  return str.charAt(0).toUpperCase() + str.slice(1) + '.'
+  const strUppercase = str.charAt(0).toUpperCase() + str.slice(1)
+  return str.endsWith('.') ? strUppercase : strUppercase + '.'
 }

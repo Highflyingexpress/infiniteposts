@@ -1,20 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import './App.css'
 import { useNavigate } from 'react-router-dom'
 import { prettierStr } from 'utils/strFormat'
 import { IdCircle } from 'ui/idCircle'
 import { IPost } from 'interfaces/posts.interfaces'
 import { useGetPostsQuery } from '../service/postsApi'
+import { useDispatch, useSelector } from 'react-redux'
+import { setPage } from 'slices/pageSlice'
+import { RootState } from 'store'
+import infiniteSign from '../svg/infiniteSign.svg'
 
 export default function App() {
-  const [page, setPage] = useState(0)
-  const { data, isFetching } = useGetPostsQuery(page)
+  const page = useSelector((state: RootState) => state.page)
+  const { data, isFetching }: { data?: IPost[]; isFetching: boolean } = useGetPostsQuery(page)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const onScroll = () => {
       const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight
-      if (scrolledToBottom && !isFetching) setPage(page + 1)
+      if (scrolledToBottom && !isFetching) dispatch(setPage(page + 1))
     }
 
     document.addEventListener('scroll', onScroll)
@@ -34,7 +39,7 @@ export default function App() {
       >
         <IdCircle>{id}</IdCircle>
         <h3>{prettierStr(title)}</h3>
-        <div className="postBody">{body}</div>
+        <div className="postBody">{prettierStr(body)}</div>
         <button className="btn" onClick={() => navigate(`posts/${id}`)}>
           просмотр
         </button>
@@ -44,8 +49,16 @@ export default function App() {
 
   return (
     <div className="App">
-      <h3>React - RTK Query - Router v6 - JSONPlaceholder</h3>
-      <h4>scrollin down is infinity - caution - do not hurt your middle finger</h4>
+      <div className="AppHeader">
+        <img src={infiniteSign} alt="Infinite scroll app" />
+        <div>
+          <h3>React - RTK Query - Router v6 - JSONPlaceholder</h3>
+          <h4>
+            scrollin down is infinity here - <span style={{ color: 'darkred' }}>caution</span> - do not hurt your
+            scrollin-finger
+          </h4>
+        </div>
+      </div>
       {data?.map((p: IPost) => <Post key={p.id} id={p.id} title={p.title} body={p.body} />)}
     </div>
   )
