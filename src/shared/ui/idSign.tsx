@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const IdCircle = ({ children }: { children: number }) => {
+export const IdSign = ({ children }: { children: number }) => {
   return (
     <span
       style={{

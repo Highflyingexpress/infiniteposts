@@ -1,8 +1,8 @@
 import React from 'react'
-import { useGetPostQuery } from 'service/postsApi'
-import { prettierStr } from 'utils/strFormat'
-import { IdCircle } from 'ui/idCircle'
-import { IPost } from 'interfaces/posts.interfaces'
+import { useGetPostQuery } from 'shared/api/postsApi'
+import { prettierStr } from 'shared/lib/strFormat'
+import { IdSign } from 'shared/ui/idSign'
+import { IPost } from 'shared/types/api/posts.interfaces'
 import { useNavigate, useParams } from 'react-router-dom'
 
 export const Post = () => {
@@ -21,7 +21,7 @@ export const Post = () => {
         margin: '10px auto',
       }}
     >
-      <IdCircle>{Number(postId)}</IdCircle>
+      <IdSign>{Number(postId)}</IdSign>
       <h3>{prettierStr(title)}</h3>
       <div>{prettierStr(body)}</div>
       <h4>Author: user{data?.userId}</h4>

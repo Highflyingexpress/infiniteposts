@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
-import { postsApi } from './service/postsApi'
-import { pageReducer } from 'slices/pageSlice'
+import { postsApi } from '../api/postsApi'
+import { pageReducer } from 'shared/store/slices/pageSlice'
 
 export const store = configureStore({
   reducer: {
