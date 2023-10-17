@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import { Provider } from 'react-redux'
-import { store } from 'shared/store/store'
+import { store } from 'app/store'
 
 type StoreProviderType = {
   children: ReactNode

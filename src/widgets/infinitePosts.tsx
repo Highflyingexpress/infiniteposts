@@ -2,9 +2,8 @@ import React, { useEffect } from 'react'
 import { IPost } from 'shared/types/api/posts.interfaces'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { setPage } from 'shared/store/slices/pageSlice'
-import { RootState } from 'shared/store/store'
-import { PostCard } from '../entities/postCard/PostCard'
+import { setPage } from 'widgets/api/pageSlice'
+import { PostCard } from '../entities/postcard/PostCard'
 
 type InfinitePosts = {
   data: IPost[] | undefined

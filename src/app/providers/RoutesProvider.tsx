@@ -1,19 +1,14 @@
 import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import App from 'app/App'
-import { Post } from 'entities/post/Post'
+import paths from 'app/config/paths'
 
 export default function RoutesProvider() {
-  const router = createBrowserRouter([
-    {
-      path: '/',
-      element: <App />,
-    },
-    {
-      path: 'posts/:postId',
-      element: <Post />,
-    },
-  ])
+  const router = createBrowserRouter(
+    paths.map(({ path, element }) => ({
+      path,
+      element,
+    }))
+  )
 
   return <RouterProvider router={router} />
 }

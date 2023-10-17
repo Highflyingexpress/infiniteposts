@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": "src",
-    "paths": {
-      "react-redux": ["node_modules/react-redux"]
-    },
     "target": "es5",
     "lib": [
       "dom",
@@ -11,6 +8,7 @@
       "esnext"
     ],
     "allowJs": true,
+    "strictNullChecks": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,

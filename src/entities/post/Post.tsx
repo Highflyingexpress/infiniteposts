@@ -7,7 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 export const Post = () => {
   const { postId } = useParams<{ postId: string }>()
-  const { data }: { data?: IPost } = useGetPostQuery(Number(postId))
+  const { data }: { data?: IPost } = useGetPostQuery(String(postId))
   const navigate = useNavigate()
   const title = data?.title ?? ''
   const body = data?.body ?? ''

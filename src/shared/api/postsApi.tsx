@@ -1,13 +1,19 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { BASE_URL } from '../config/constants'
+import { BASE_URL } from './config/constants'
+import { IPost } from 'shared/types/api/posts.interfaces'
+
+// FSD # Also we can split this file and separate Api and hooks.
+// 1. move 'postApi' from 'shared' => 'app/api' or even to 'widgets/api'
+// 2. move hook 'useGetPostsQuery' => 'widget/..'
+// 3. move hook 'useGetPostQuery' => 'entities/post'
 
 export const postsApi = createApi({
   reducerPath: 'postsApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
-    getPosts: builder.query({
+    getPosts: builder.query<IPost[], number>({
       query: (page) => `posts?_limit=6&_start=${page * 6}`,
-      // Only have one cache entry because the arg always maps to one string
+
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName
       },
@@ -18,12 +24,11 @@ export const postsApi = createApi({
         return currentArg !== previousArg
       },
     }),
-    getPost: builder.query({
+    getPost: builder.query<IPost, string>({
       query: (postId) => `posts/${postId}`,
     }),
   }),
 })
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
+// auto-generated hooks
 export const { useGetPostsQuery, useGetPostQuery } = postsApi
